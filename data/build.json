@@ -1,0 +1,48 @@
+{
+    "libs" : [
+        "Crystal.Storage",
+        "Crystal.BitmapText",
+        "Crystal.SimpleAnimate",
+        "Crystal.Audio",
+        "Crystal.HTMLUI",
+        "Assembly-JavaScript"
+    ],
+    "scripts" : [
+        "plugins/Crispixels",
+        "plugins/FPSMeter",
+        "plugins/LZString"
+    ],
+    "resources": [
+        "main"
+    ],
+    "scenes" : [
+        "game"
+    ],
+    "shaders" : [],
+    "targetFrameRate" : -1,
+    "vSyncCount" : 1,
+    "runInBackground": true,
+    "debugMode" : true,
+    "time" : {
+        "maximumDeltaTime" : 0.3333333,
+        "timeScale" : 1,
+        "fixedDeltaTime" : 0.02
+    },
+    "noFixedUpdate": true,
+    "partioningMaxDepth" : 8,
+    "input": {
+        "gamepad": {
+            "leftStickDeadzone": {
+                "min": 0.125,
+                "max": 0.925
+            },
+            "rightStickDeadzone": {
+                "min": 0.125,
+                "max": 0.925
+            }
+        }
+    },
+    "layers" : [
+    ],
+    "sortingAxis" : { "x": 0, "y": 1 }
+}

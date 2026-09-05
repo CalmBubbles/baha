@@ -1,0 +1,32 @@
+{
+    "name": "Game",
+    "resources": [
+    ],
+    "gameObjects": [
+        {
+            "name": "camera",
+            "id": 0,
+            "components": [
+                {
+                    "type": "Camera",
+                    "args": {
+                        "backgroundColor": {
+                            "r": 0,
+                            "g": 128,
+                            "b": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "fisher",
+            "id": 1,
+            "components": [
+                {
+                    "type": "Fisher"
+                }
+            ]
+        }
+    ]
+}
