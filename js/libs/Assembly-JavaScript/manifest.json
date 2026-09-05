@@ -3,7 +3,8 @@
     "id": "main",
     "description" : "The assembly module where all of the build scripts are located",
     "scripts" : [
-        "Fisher"
+        "Fisher",
+        "Caster"
     ],
     "classes" : [
         {

@@ -1,12 +1,14 @@
 class Fisher extends GameBehavior
 {
     #dragging = false;
+    #casted = false;
+    #bit = false;
     #dragStartPos = 0;
     #dragEndPos = 0;
+    #dragCoyote = 0.5;
+    #minDragDelta = 1;
     #dragTime = 0;
     #dragDuration = 0.25;
-    #minDistance = 1;
-    #maxDistance = 5;
 
     #cam = null;
 
@@ -17,8 +19,29 @@ class Fisher extends GameBehavior
 
     Update ()
     {
+        Caster.Update();
+
         const mode = 0;
         const pos = this.#cam.ScreenToWorldPoint(Input.mousePosition).y;
+
+        if (this.#casted)
+        {
+            if (this.#bit && Input.GetMouseButtonDown(0))
+            {
+                console.log(`caught: ${Caster.GetCaught()}`);
+                Caster.Reset();
+
+                this.#bit = false;
+                this.#casted = false;
+            }
+            else if (!this.#bit && Caster.HasBit())
+            {
+                this.#bit = true;
+                console.log("bit");
+            }
+
+            return;
+        }
 
         if (mode === 0)
         {
@@ -35,13 +58,15 @@ class Fisher extends GameBehavior
             {
                 this.#dragTime += Time.deltaTime;
 
-                if (pos < this.#dragEndPos - 1 || this.#dragTime > this.#dragDuration) this.#ResetDrag();
+                if (pos < this.#dragEndPos - this.#dragCoyote || this.#dragTime > this.#dragDuration) this.#ResetDrag();
                 else if (pos > this.#dragEndPos) this.#dragEndPos = pos;
             }
 
             if (Input.GetMouseButtonUp(0) && this.#dragging)
             {
-                if (this.#dragEndPos > this.#dragStartPos) this.#Cast(this.#dragEndPos - this.#dragStartPos);
+                const dragDelta = this.#dragEndPos - this.#dragStartPos;
+
+                if (dragDelta >= this.#minDragDelta) this.#Cast();
                 this.#ResetDrag();
             }
         }
@@ -57,11 +82,10 @@ class Fisher extends GameBehavior
         console.log("resetdrag");
     }
 
-    #Cast (distance)
+    #Cast ()
     {
-        if (distance < this.#minDistance) return;
-        if (distance > this.#maxDistance) distance = this.#maxDistance;
-
-        console.log(`casted: ${distance}`);
+        this.#casted = true;
+        console.log("casted");
+        Caster.Cast();
     }
 }
