@@ -103,7 +103,6 @@ class Caster
     static Cast ()
     {
         if (this.#casted != null) return;
-        
         this.#casted = LootTable.Get(HardRandom());
     }
 
