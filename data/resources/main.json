@@ -1,1 +1,347 @@
-[]
+[
+    {
+        "path": "sprites/bg/house0",
+        "type": "Texture",
+        "args": {
+            "src": "bg/house0.png",
+            "pixelPerUnit": 40
+        }
+    },
+    {
+        "path": "sprites/avatars/char0",
+        "type": "Texture",
+        "args": {
+            "src": "avatars/char0.png",
+            "pixelPerUnit": 40,
+            "sprites": [
+                {
+                    "name": "idle",
+                    "rect": {
+                        "width": 718,
+                        "height": 404
+                    }
+                },
+                {
+                    "name": "hold",
+                    "rect": {
+                        "width": 718,
+                        "height": 404,
+                        "x": 718
+                    }
+                },
+                {
+                    "name": "cast-0",
+                    "rect": {
+                        "width": 718,
+                        "height": 404,
+                        "x": 1436
+                    }
+                },
+                {
+                    "name": "cast-1",
+                    "rect": {
+                        "width": 718,
+                        "height": 404,
+                        "x": 2154
+                    }
+                },
+                {
+                    "name": "wait",
+                    "rect": {
+                        "width": 718,
+                        "height": 404,
+                        "x": 2872
+                    }
+                },
+                {
+                    "name": "bit",
+                    "rect": {
+                        "width": 718,
+                        "height": 404,
+                        "x": 3590
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "path": "anims/avatar/ctrl",
+        "type": "AnimatorController",
+        "args": {
+            "motions": [
+                {
+                    "name": "idle",
+                    "speed": 1,
+                    "animation": "anims/avatar/idle",
+                    "transitions": [
+                        {
+                            "nextNode": "hold",
+                            "isExit": false,
+                            "exitTime": 0,
+                            "conditions": [
+                                {
+                                    "mode": 4,
+                                    "parameter": "state",
+                                    "threshold": 1
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "hold",
+                    "speed": 1,
+                    "animation": "anims/avatar/hold",
+                    "transitions": [
+                        {
+                            "nextNode": "idle",
+                            "isExit": false,
+                            "exitTime": 0,
+                            "conditions": [
+                                {
+                                    "mode": 4,
+                                    "parameter": "state",
+                                    "threshold": 0
+                                }
+                            ]
+                        },
+                        {
+                            "nextNode": "cast",
+                            "isExit": false,
+                            "exitTime": 0,
+                            "conditions": [
+                                {
+                                    "mode": 4,
+                                    "parameter": "state",
+                                    "threshold": 2
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "cast",
+                    "speed": 1,
+                    "animation": "anims/avatar/cast",
+                    "transitions": [
+                        {
+                            "nextNode": "wait"
+                        }
+                    ]
+                },
+                {
+                    "name": "wait",
+                    "speed": 1,
+                    "animation": "anims/avatar/wait",
+                    "transitions": [
+                        {
+                            "nextNode": "bit",
+                            "isExit": false,
+                            "exitTime": 0,
+                            "conditions": [
+                                {
+                                    "mode": 4,
+                                    "parameter": "state",
+                                    "threshold": 3
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "bit",
+                    "speed": 1,
+                    "animation": "anims/avatar/bit",
+                    "transitions": [
+                        {
+                            "nextNode": "idle",
+                            "isExit": false,
+                            "exitTime": 0,
+                            "conditions": [
+                                {
+                                    "mode": 4,
+                                    "parameter": "state",
+                                    "threshold": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "state",
+                    "type": 2
+                }
+            ]
+        }
+    },
+    {
+        "path": "anims/avatar/idle",
+        "type": "AnimationClip",
+        "args": {
+            "framerate": 1,
+            "duration": 1,
+            "frames": [
+                {
+                    "index": 0,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "idle"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "path": "anims/avatar/hold",
+        "type": "AnimationClip",
+        "args": {
+            "framerate": 1,
+            "duration": 1,
+            "frames": [
+                {
+                    "index": 0,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "hold"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "path": "anims/avatar/cast",
+        "type": "AnimationClip",
+        "args": {
+            "framerate": 12,
+            "duration": 2,
+            "loop": false,
+            "frames": [
+                {
+                    "index": 0,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "cast-0"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "cast-1"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "path": "anims/avatar/wait",
+        "type": "AnimationClip",
+        "args": {
+            "framerate": 1,
+            "duration": 1,
+            "frames": [
+                {
+                    "index": 0,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "wait"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "path": "anims/avatar/bit",
+        "type": "AnimationClip",
+        "args": {
+            "framerate": 12,
+            "duration": 12,
+            "frames": [
+                {
+                    "index": 0,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "bit"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "index": 1,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "wait"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "index": 2,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "bit"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "index": 3,
+                    "actions": [
+                        {
+                            "component": "SpriteRenderer",
+                            "property": "sprite",
+                            "value": {
+                                "texture": "sprites/avatars/char0",
+                                "name": "wait"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]

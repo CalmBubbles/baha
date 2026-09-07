@@ -11,10 +11,12 @@ class Fisher extends GameBehavior
     #dragDuration = 0.25;
 
     #cam = null;
+    #animator = null;
 
     Start ()
     {
         this.#cam = Camera.main;
+        this.#animator = this.GetComponent(Animator);
     }
 
     Update ()
@@ -29,7 +31,9 @@ class Fisher extends GameBehavior
             if (this.#bit && Input.GetMouseButtonDown(0))
             {
                 console.log(`caught: ${Caster.GetCaught()}`);
+
                 Caster.Reset();
+                this.#animator.SetNumber("state", 0);
 
                 this.#bit = false;
                 this.#casted = false;
@@ -37,6 +41,8 @@ class Fisher extends GameBehavior
             else if (!this.#bit && Caster.HasBit())
             {
                 this.#bit = true;
+                this.#animator.SetNumber("state", 3);
+
                 console.log("bit");
             }
 
@@ -51,6 +57,8 @@ class Fisher extends GameBehavior
                 this.#dragStartPos = pos;
                 this.#dragEndPos = pos;
 
+                this.#animator.SetNumber("state", 1);
+
                 console.log("startdrag");
             }
 
@@ -58,7 +66,11 @@ class Fisher extends GameBehavior
             {
                 this.#dragTime += Time.deltaTime;
 
-                if (pos < this.#dragEndPos - this.#dragCoyote || this.#dragTime > this.#dragDuration) this.#ResetDrag();
+                if (pos < this.#dragEndPos - this.#dragCoyote || this.#dragTime > this.#dragDuration)
+                {
+                    this.#animator.SetNumber("state", 0);
+                    this.#ResetDrag();
+                }
                 else if (pos > this.#dragEndPos) this.#dragEndPos = pos;
             }
 
@@ -67,6 +79,8 @@ class Fisher extends GameBehavior
                 const dragDelta = this.#dragEndPos - this.#dragStartPos;
 
                 if (dragDelta >= this.#minDragDelta) this.#Cast();
+                else this.#animator.SetNumber("state", 0);
+                
                 this.#ResetDrag();
             }
         }
@@ -86,6 +100,8 @@ class Fisher extends GameBehavior
     {
         this.#casted = true;
         console.log("casted");
+
+        this.#animator.SetNumber("state", 2);
         Caster.Cast();
     }
 }

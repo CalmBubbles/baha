@@ -4,8 +4,8 @@
     "version": "2026.1a",
     "window": {
         "title": "Fih in Flood",
-        "width": 400,
-        "height": 720,
+        "width": 456,
+        "height": 808,
         "fillWindow": true,
         "icon": "icon/icon.png"
     }
