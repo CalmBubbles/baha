@@ -3,12 +3,22 @@
     "id": "main",
     "description" : "The assembly module where all of the build scripts are located",
     "scripts" : [
+        "CursorInput",
         "Fisher",
-        "Caster"
+        "Caster",
+        "Reel"
     ],
     "classes" : [
         {
+            "name": "CursorInput",
+            "type": 0
+        },
+        {
             "name": "Fisher",
+            "type": 0
+        },
+        {
+            "name": "Reel",
             "type": 0
         }
     ]

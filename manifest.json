@@ -4,9 +4,19 @@
     "version": "2026.1a",
     "window": {
         "title": "Fih in Flood",
-        "width": 456,
-        "height": 808,
+        "width": 395,
+        "height": 700,
         "fillWindow": true,
-        "icon": "icon/icon.png"
+        "icon": "icon/icon.png",
+        "minWindowWidth": 300,
+        "minWindowHeight": 532,
+        "minAspect": {
+            "x": 114,
+            "y": 202
+        },
+        "maxAspect": {
+            "x": 359,
+            "y": 202
+        }
     }
 }

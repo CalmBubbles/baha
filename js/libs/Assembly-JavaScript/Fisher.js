@@ -10,21 +10,25 @@ class Fisher extends GameBehavior
     #dragTime = 0;
     #dragDuration = 0.25;
 
-    #cam = null;
     #animator = null;
 
     Start ()
     {
-        this.#cam = Camera.main;
         this.#animator = this.GetComponent(Animator);
+
+        // const ren = this.GetComponent(Renderer);
+
+        // console.log(ren.material)
     }
 
     Update ()
     {
+        return;
+
         Caster.Update();
 
         const mode = 0;
-        const pos = this.#cam.ScreenToWorldPoint(Input.mousePosition).y;
+        const pos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
 
         if (this.#casted)
         {

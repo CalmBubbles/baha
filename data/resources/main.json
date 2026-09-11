@@ -1,10 +1,18 @@
 [
     {
+        "path": "sprites/cursor",
+        "type": "Texture",
+        "args": {
+            "src": "cursor.png",
+            "pixelPerUnit": 50
+        }
+    },
+    {
         "path": "sprites/bg/house0",
         "type": "Texture",
         "args": {
             "src": "bg/house0.png",
-            "pixelPerUnit": 40
+            "pixelPerUnit": 50
         }
     },
     {
@@ -12,7 +20,7 @@
         "type": "Texture",
         "args": {
             "src": "avatars/char0.png",
-            "pixelPerUnit": 40,
+            "pixelPerUnit": 50,
             "sprites": [
                 {
                     "name": "idle",
@@ -62,6 +70,14 @@
                     }
                 }
             ]
+        }
+    },
+    {
+        "path": "sprites/reel/default",
+        "type": "Texture",
+        "args": {
+            "src": "reel/default.png",
+            "pixelPerUnit": 50
         }
     },
     {

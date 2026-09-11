@@ -1,6 +1,7 @@
 {
     "name": "Game",
     "resources": [
+        "sprites/cursor",
         "sprites/bg/house0",
         "sprites/avatars/char0",
         [
@@ -10,7 +11,8 @@
             "anims/avatar/wait",
             "anims/avatar/bit",
             "anims/avatar/ctrl"
-        ]
+        ],
+        "sprites/reel/default"
     ],
     "gameObjects": [
         {
@@ -24,14 +26,33 @@
                             "r": 0,
                             "g": 128,
                             "b": 0
-                        }
+                        },
+                        "orthographicSize": 8.08
                     }
                 }
             ]
         },
         {
-            "name": "fisher",
+            "name": "cursor",
             "id": 1,
+            "components": [
+                {
+                    "type": "SpriteRenderer",
+                    "args": {
+                        "sprite": {
+                            "texture": "sprites/cursor"
+                        },
+                        "sortingLayer": 1
+                    }
+                },
+                {
+                    "type": "CursorInput"
+                }
+            ]
+        },
+        {
+            "name": "fisher",
+            "id": 2,
             "components": [
                 {
                     "type": "SpriteRenderer",
@@ -55,7 +76,7 @@
         },
         {
             "name": "bg",
-            "id": 2,
+            "id": 3,
             "components": [
                 {
                     "type": "SpriteRenderer",
@@ -63,7 +84,7 @@
                         "sprite": {
                             "texture": "sprites/bg/house0"
                         },
-                        "sortingLayer": 1,
+                        "sortingLayer": 2,
                         "color": {
                             "r": 255,
                             "g": 255,
@@ -71,6 +92,29 @@
                             "a": 128
                         }
                     }
+                }
+            ]
+        },
+        {
+            "name": "reel",
+            "id": 4,
+            "transform": {
+                "position": {
+                    "y": -1.75
+                }
+            },
+            "components": [
+                {
+                    "type": "SpriteRenderer",
+                    "args": {
+                        "sprite": {
+                            "texture": "sprites/reel/default"
+                        },
+                        "sortingLayer": 3
+                    }
+                },
+                {
+                    "type": "Reel"
                 }
             ]
         }
