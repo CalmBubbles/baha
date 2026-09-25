@@ -1,6 +1,7 @@
 class CursorInput extends GameBehavior
 {
     static screenPos = Vector2.zero;
+    static locked = false;
 
     #cam = null;
     #sprRenderer = null;

@@ -15,10 +15,6 @@ class Fisher extends GameBehavior
     Start ()
     {
         this.#animator = this.GetComponent(Animator);
-
-        // const ren = this.GetComponent(Renderer);
-
-        // console.log(ren.material)
     }
 
     Update ()

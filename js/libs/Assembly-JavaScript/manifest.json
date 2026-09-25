@@ -3,12 +3,47 @@
     "id": "main",
     "description" : "The assembly module where all of the build scripts are located",
     "scripts" : [
+        "CircleRenderer",
         "CursorInput",
         "Fisher",
         "Caster",
         "Reel"
     ],
     "classes" : [
+        {
+            "name": "CircleRenderer",
+            "type": 0,
+            "args" : [
+                {
+                    "name" : "color",
+                    "type" : "Color"
+                },
+                {
+                    "name" : "sortingLayer",
+                    "type" : "number"
+                },
+                {
+                    "name" : "sortingOrder",
+                    "type" : "number"
+                },
+                {
+                    "name" : "sortingAxisOffset",
+                    "type" : "Vector2"
+                },
+                {
+                    "name" : "strokeColor",
+                    "type" : "Color"
+                },
+                {
+                    "name" : "radius",
+                    "type" : "number"
+                },
+                {
+                    "name" : "strokeThickness",
+                    "type" : "number"
+                }
+            ]
+        },
         {
             "name": "CursorInput",
             "type": 0

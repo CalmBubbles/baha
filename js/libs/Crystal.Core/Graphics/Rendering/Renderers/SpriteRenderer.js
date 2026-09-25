@@ -1,4 +1,4 @@
-class SpriteRenderer extends Renderer
+class SpriteRenderer extends TexturedRenderer
 {
     #remapColors = false;
     #meshChanged = true;
@@ -6,7 +6,6 @@ class SpriteRenderer extends Renderer
     #indexes = [];
     #trisCounts = [];
     
-    #texSize = Vector2.zero;
     #boundsSize = Vector2.zero;
     #bounds = new Bounds();
     #transMat = new Matrix3x3();
@@ -34,8 +33,9 @@ class SpriteRenderer extends Renderer
     
     set sprite (value)
     {
+        if (this.#sprite === value) return;
+
         this.#sprite = value.Duplicate();
-        
         this.Reload();
     }
 
@@ -111,11 +111,11 @@ class SpriteRenderer extends Renderer
         this.material.SetBuffer(this.colorBufferID, colorArray);
     }
     
-    Reload ()
+    _OnLoad ()
     {
-        if (this.updatedMaterial) this.#remapColors = true;
+        super._OnLoad();
 
-        super.Reload();
+        if (this.updatedMaterial) this.#remapColors = true;
 
         this.#spriteOld = this.#sprite;
 
@@ -157,7 +157,6 @@ class SpriteRenderer extends Renderer
         const rescaleW = texX / ppu;
         const rescaleH = texY / ppu;
 
-        this.#texSize = new Vector2(rescaleW, rescaleH);
         this.#boundsSize = new Vector2(
             rescaleW * (verts[3].x - vertexPos.x),
             rescaleH * (verts[3].y - vertexPos.y)
@@ -589,7 +588,6 @@ class SpriteRenderer extends Renderer
         const gl = this.material.gl;
         
         const renderMatrix = this.renderMatrix;
-        
         this.material.SetMatrix(this.uMatrixID,
             renderMatrix.matrix[0][0],
             renderMatrix.matrix[0][1],
@@ -625,6 +623,7 @@ class SpriteRenderer extends Renderer
             gl.drawArrays(gl.TRIANGLE_STRIP, this.#indexes[i], this.#trisCounts[i]);
         }
         
+        gl.bindTexture(gl.TEXTURE_2D, null);
         gl.useProgram(null);
     }
 

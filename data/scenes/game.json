@@ -1,6 +1,7 @@
 {
     "name": "Game",
     "resources": [
+        "sprites/pixel",
         "sprites/cursor",
         "sprites/bg/house0",
         "sprites/avatars/char0",
@@ -115,6 +116,30 @@
                 },
                 {
                     "type": "Reel"
+                }
+            ]
+        },
+        {
+            "name": "reel_handle",
+            "id": 5,
+            "parent": 4,
+            "transform": {
+                "position": {
+                    "x": 1.625
+                }
+            },
+            "components": [
+                {
+                    "type": "CircleRenderer",
+                    "args": {
+                        "sortingLayer": 4,
+                        "color": {
+                            "r": 0,
+                            "g": 255,
+                            "b": 0,
+                            "a": 128
+                        }
+                    }
                 }
             ]
         }

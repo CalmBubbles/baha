@@ -1,5 +1,13 @@
 [
     {
+        "path": "sprites/pixel",
+        "type": "Texture",
+        "args": {
+            "src": "pixel.png",
+            "pixelPerUnit": 50
+        }
+    },
+    {
         "path": "sprites/cursor",
         "type": "Texture",
         "args": {
