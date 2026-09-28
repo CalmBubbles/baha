@@ -2,6 +2,9 @@ class Reel extends GameBehavior
 {
     #dragging = false;
     #handleSize = 0.3;
+    #turnRadius = 0;
+    #maxSpeed = 1;  // rps
+    #maxDetection = 270;
     #dragStart = Vector2.zero;
 
     #handle = null;
@@ -10,31 +13,66 @@ class Reel extends GameBehavior
     {
         this.#handle = this.transform.Find("reel_handle").GetComponent(CircleRenderer);
         this.#handle.radius = this.#handleSize;
+        this.#turnRadius = this.#handle.transform.localPosition.x;
 
         // this.gameObject.SetActive(false);
     }
 
     Update ()
     {
-        if (Vector2.Distance(CursorInput.screenPos, this.#handle.transform.position) <= this.#handleSize)
+        if (!this.#dragging)
         {
-            // hover
-
-            // drag start
-            if (Input.GetMouseButtonDown(0) && !this.#dragging)
+            if (Vector2.Distance(CursorInput.screenPos, this.#handle.transform.position) <= this.#handleSize)
             {
-                this.#dragging = true;
-                this.#dragStart = Vector2.Subtract(CursorInput.screenPos, this.#handle.transform.position);
+                // hover
+
+                // drag start
+                if (Input.GetMouseButtonDown(0))
+                {
+                    this.#dragging = true;
+                    this.#dragStart = Vector2.Subtract(CursorInput.screenPos, this.#handle.transform.position);
+
+                    // CursorInput.visible = false;
+                }
             }
+
+            return;
         }
-        
-        if (!this.#dragging) return;
+
+        // let go
+        if (Input.GetMouseButtonUp(0))
+        {
+            this.#dragging = false;
+            this.#dragStart = Vector2.zero;
+
+            CursorInput.visible = true;
+            CursorInput.UnlockCircle();
+
+            return;
+        }
+
+        CursorInput.LockToCircle(
+            this.transform.localPosition,
+            this.#turnRadius
+        );
 
         const pos = Vector2.Subtract(
             Vector2.Subtract(CursorInput.screenPos, this.#dragStart),
             this.transform.localPosition
         );
 
-        this.transform.rotation = 180 * Math.atan2(pos.y, pos.x) / Math.PI;
+        let newAngle = 180 * Math.atan2(pos.y, pos.x) / Math.PI;
+
+        if (newAngle < 0) newAngle += 360;
+        if (newAngle < this.transform.rotation) newAngle += 360;
+
+        // TODO: detect when going in reverse
+        
+        if (newAngle > this.transform.rotation + this.#maxDetection) return;
+
+        GameWindow.SetTitle(newAngle);
+
+        this.transform.rotation = Math.min(newAngle, this.transform.rotation + 360 * this.#maxSpeed * Time.deltaTime);
+        if (this.transform.rotation >= 360) this.transform.rotation = 0;
     }
 }
