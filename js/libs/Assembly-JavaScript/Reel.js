@@ -4,7 +4,7 @@ class Reel extends GameBehavior
     #handleSize = 0.3;
     #turnRadius = 0;
     #maxSpeed = 1;  // rps
-    #maxDetection = 270;
+    #angle = 0;
     #dragStart = Vector2.zero;
 
     #handle = null;
@@ -60,19 +60,30 @@ class Reel extends GameBehavior
             Vector2.Subtract(CursorInput.screenPos, this.#dragStart),
             this.transform.localPosition
         );
+        const fAngle = 360 * this.#maxSpeed * Time.deltaTime;
 
         let newAngle = 180 * Math.atan2(pos.y, pos.x) / Math.PI;
-
         if (newAngle < 0) newAngle += 360;
-        if (newAngle < this.transform.rotation) newAngle += 360;
+        if (newAngle < this.#angle && this.#angle > 180 - fAngle) newAngle += 360;
 
-        // TODO: detect when going in reverse
-        
-        if (newAngle > this.transform.rotation + this.#maxDetection) return;
+        const deltaAngle = Math.DeltaAngle(this.transform.rotation, newAngle);
 
-        GameWindow.SetTitle(newAngle);
+        GameWindow.SetTitle(deltaAngle);
 
-        this.transform.rotation = Math.min(newAngle, this.transform.rotation + 360 * this.#maxSpeed * Time.deltaTime);
-        if (this.transform.rotation >= 360) this.transform.rotation = 0;
+        // TODO: fix bug where going to opposite turns the knob
+
+        if (deltaAngle > 0) this.#angle = newAngle;
+            
+        this.transform.rotation = Math.Clamp(
+            this.#angle,
+            this.transform.rotation - fAngle,
+            this.transform.rotation + fAngle,
+        );
+
+        if (this.transform.rotation >= 360)
+        {
+            this.#angle = this.#angle % 360;
+            this.transform.rotation = this.transform.rotation % 360;
+        }
     }
 }
