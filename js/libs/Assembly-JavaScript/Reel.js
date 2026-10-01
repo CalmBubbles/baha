@@ -3,7 +3,7 @@ class Reel extends GameBehavior
     #dragging = false;
     #handleSize = 0.3;
     #turnRadius = 0;
-    #maxSpeed = 1;  // rps
+    #maxSpeed = 2;  // rps
     #angle = 0;
     #dragStart = Vector2.zero;
 
@@ -44,6 +44,7 @@ class Reel extends GameBehavior
         {
             this.#dragging = false;
             this.#dragStart = Vector2.zero;
+            this.#angle = this.transform.localRotation;
 
             CursorInput.visible = true;
             CursorInput.UnlockCircle();
@@ -73,17 +74,17 @@ class Reel extends GameBehavior
         // TODO: fix bug where going to opposite turns the knob
 
         if (deltaAngle > 0) this.#angle = newAngle;
-            
-        this.transform.rotation = Math.Clamp(
+        
+        this.transform.localRotation = Math.Clamp(
             this.#angle,
-            this.transform.rotation - fAngle,
-            this.transform.rotation + fAngle,
+            this.transform.localRotation - fAngle,
+            this.transform.localRotation + fAngle,
         );
 
-        if (this.transform.rotation >= 360)
+        if (this.transform.localRotation >= 360)
         {
             this.#angle = this.#angle % 360;
-            this.transform.rotation = this.transform.rotation % 360;
+            this.transform.localRotation = this.transform.localRotation % 360;
         }
     }
 }

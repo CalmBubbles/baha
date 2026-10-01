@@ -43,9 +43,9 @@ Math.InRange = function (min, max, value, exclusive)
     return value >= min && value <= max;
 }
 
-Math.DeltaAngle = function (a, b)
+Math.DeltaAngle = function (start, end)
 {
-    let delta = (b - a) % 360;
+    let delta = (end - start) % 360;
 
     if (delta > 180) delta -= 360;
     else if (delta < -180) delta += 360;
