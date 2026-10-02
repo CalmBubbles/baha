@@ -48,11 +48,14 @@
                 },
                 {
                     "type": "CursorInput"
+                },
+                {
+                    "type": "TouchInput"
                 }
             ]
         },
         {
-            "name": "fisher",
+            "name": "angler",
             "id": 2,
             "components": [
                 {
@@ -71,7 +74,7 @@
                     }
                 },
                 {
-                    "type": "Fisher"
+                    "type": "FishingManager"
                 }
             ]
         },

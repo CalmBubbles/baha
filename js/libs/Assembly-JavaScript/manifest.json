@@ -5,7 +5,8 @@
     "scripts" : [
         "CircleRenderer",
         "CursorInput",
-        "Fisher",
+        "TouchInput",
+        "FishingManager",
         "Caster",
         "Reel"
     ],
@@ -49,7 +50,11 @@
             "type": 0
         },
         {
-            "name": "Fisher",
+            "name": "TouchInput",
+            "type": 0
+        },
+        {
+            "name": "FishingManager",
             "type": 0
         },
         {

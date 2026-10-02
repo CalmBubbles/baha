@@ -1,4 +1,4 @@
-class Fisher extends GameBehavior
+class FishingManager extends GameBehavior
 {
     #dragging = false;
     #casted = false;
@@ -11,39 +11,44 @@ class Fisher extends GameBehavior
     #dragDuration = 0.25;
 
     #animator = null;
+    #reel = null;
+    #trackedTouch = null;
 
     Start ()
     {
+        if (Application.isMobilePlatform) GameWindow.fullscreen = true;
+
+        Crispixels.effect = true;
+
         this.#animator = this.GetComponent(Animator);
+
+        this.#reel = GameObject.Find("reel").GetComponent("Reel");
     }
 
     Update ()
     {
-        return;
-
         Caster.Update();
 
         const mode = 0;
-        const pos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
 
         if (this.#casted)
-        {
-            if (this.#bit && Input.GetMouseButtonDown(0))
+        {   
+            if (this.#bit && this.#reel.turns >= 2)
             {
-                console.log(`caught: ${Caster.GetCaught()}`);
-
                 Caster.Reset();
                 this.#animator.SetNumber("state", 0);
 
                 this.#bit = false;
                 this.#casted = false;
+
+                this.#reel.Hide();
             }
             else if (!this.#bit && Caster.HasBit())
             {
                 this.#bit = true;
                 this.#animator.SetNumber("state", 3);
 
-                console.log("bit");
+                this.#reel.Show();
             }
 
             return;
@@ -51,15 +56,30 @@ class Fisher extends GameBehavior
 
         if (mode === 0)
         {
-            if (Input.GetMouseButtonDown(0) && !this.#dragging)
+            const touch = this.#trackedTouch == null ? Input.touches.find(item => item.phase === TouchPhase.Began) : Input.GetTouch(this.#trackedTouch);
+            const pos = Camera.main.ScreenToWorldPoint(touch == null ? CursorInput.mousePos : touch.position).y;
+
+            if ((Input.GetMouseButtonDown(0) || touch != null) && !this.#dragging)
             {
                 this.#dragging = true;
                 this.#dragStartPos = pos;
                 this.#dragEndPos = pos;
 
+                this.#trackedTouch = touch?.fingerID;
+
                 this.#animator.SetNumber("state", 1);
 
                 console.log("startdrag");
+            }
+
+            if ((Input.GetMouseButtonUp(0) || ([TouchPhase.Ended, TouchPhase.Cancelled]).includes(touch?.phase)) && this.#dragging)
+            {
+                const dragDelta = this.#dragEndPos - this.#dragStartPos;
+
+                if (dragDelta >= this.#minDragDelta) this.#Cast();
+                else this.#animator.SetNumber("state", 0);
+                
+                this.#ResetDrag();
             }
 
             if (this.#dragging)
@@ -73,21 +93,13 @@ class Fisher extends GameBehavior
                 }
                 else if (pos > this.#dragEndPos) this.#dragEndPos = pos;
             }
-
-            if (Input.GetMouseButtonUp(0) && this.#dragging)
-            {
-                const dragDelta = this.#dragEndPos - this.#dragStartPos;
-
-                if (dragDelta >= this.#minDragDelta) this.#Cast();
-                else this.#animator.SetNumber("state", 0);
-                
-                this.#ResetDrag();
-            }
         }
     }
 
     #ResetDrag ()
     {
+        this.#trackedTouch = null;
+
         this.#dragging = false;
         this.#dragStartPos = 0;
         this.#dragEndPos = 0;
