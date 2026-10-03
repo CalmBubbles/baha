@@ -11,19 +11,21 @@ class Reel extends GameBehavior
     #lastInput = 0;
     #struggle = 0;
     #struggleTime = 0;
+    #struggleStartTime = 0;
+    #struggleStartDuration = 1;
     #dragStart = Vector2.zero;
 
     #sprRenderer = null;
     #handle = null;
 
     maxSpeed = 1;  // rps
-    fihStrength = new Vector2(0.1, 2);
+    fihStrength = new Vector2(0.1, 1);
     fihBurstStrength = new Vector2(4, 6);
-    fihBurstChance = 10;
+    fihBurstChance = 5;
 
     get turns ()
     {
-        return this.#rotation / 360;
+        return this.transform.localRotation / 360;
     }
 
     Start ()
@@ -55,6 +57,8 @@ class Reel extends GameBehavior
 
             CursorInput.visible = true;
             CursorInput.UnlockCircle();
+            
+            TouchInput.Track(null);
         }
 
         if (this.#targetActivation && !this.#active)
@@ -85,15 +89,21 @@ class Reel extends GameBehavior
 
     #UpdateStruggle ()
     {
+        if (this.#struggleStartTime <= this.#struggleStartDuration)
+        {
+            this.#struggleStartTime += Time.deltaTime;
+            return;
+        }
+
         this.#struggleTime -= Time.deltaTime;
 
         if (this.#struggleTime <= 0)
         {
-            const shouldBurst = Math.random() <= 0.01 * this.fihBurstChance;
+            const shouldBurst = this.#dragging && Math.random() <= 0.01 * this.fihBurstChance;
             const fihStrength = shouldBurst ? this.fihBurstStrength : this.fihStrength;
 
             this.#struggle = Math.RandomRanged(fihStrength.x, fihStrength.y);
-            this.#struggleTime = shouldBurst ? 0.25 : Math.random() * 3;
+            this.#struggleTime = shouldBurst ? 0.125 : Math.random() * 3;
         }
         
         this.#rotation -= 360 * this.#struggle * Time.deltaTime;
@@ -141,6 +151,7 @@ class Reel extends GameBehavior
                 {
                     this.#dragging = true;
                     this.#dragStart = Vector2.Subtract(CursorInput.screenPos, this.#handle.transform.position);
+                    this.#struggleStartTime = this.#struggleStartDuration;
 
                     CursorInput.visible = false;
                 }
@@ -150,7 +161,7 @@ class Reel extends GameBehavior
         }
 
         // let go
-        if ((TouchInput.isTracking && TouchInput.Ended()) || Input.GetMouseButtonUp(0))
+        if (TouchInput.Ended() || Input.GetMouseButtonUp(0))
         {
             this.#dragging = false;
 
@@ -189,13 +200,16 @@ class Reel extends GameBehavior
         this.#rotation = this.transform.localRotation;
 
         TouchInput.UnlockCircle();
-        TouchInput.Track(null);
     }
 
     Reset ()
     {
         this.transform.localRotation = 0;
         this.#dragStart = Vector2.zero;
+        this.#struggle = 0;
+        this.#struggleTime = 0;
+        this.#struggleStartTime = 0;
+
         this.#OnLetgo();
     }
 

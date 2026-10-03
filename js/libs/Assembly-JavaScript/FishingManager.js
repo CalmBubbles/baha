@@ -33,7 +33,7 @@ class FishingManager extends GameBehavior
 
         if (this.#casted)
         {   
-            if (this.#bit && this.#reel.turns >= 2)
+            if (this.#bit && Math.abs(this.#reel.turns) >= 10)
             {
                 Caster.Reset();
                 this.#animator.SetNumber("state", 0);
@@ -42,6 +42,8 @@ class FishingManager extends GameBehavior
                 this.#casted = false;
 
                 this.#reel.Hide();
+
+                // TODO: -:gone +:got
             }
             else if (!this.#bit && Caster.HasBit())
             {

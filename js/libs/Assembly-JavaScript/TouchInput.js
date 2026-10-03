@@ -44,7 +44,7 @@ class TouchInput extends GameBehavior
     {
         const touch = Input.GetTouch(TouchInput._fingerID);
 
-        if (touch == null) return true;
+        if (touch == null) return false;
         return ([TouchPhase.Ended, TouchPhase.Cancelled]).includes(touch.phase);
     }
 
