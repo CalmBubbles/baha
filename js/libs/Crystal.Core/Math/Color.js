@@ -7,7 +7,7 @@ class Color
 
     static get black ()
     {
-        return new Color(0, 0, 0);
+        return new Color();
     }
 
     static get white ()
@@ -42,7 +42,7 @@ class Color
         return new Color(value, value, value, this.a);
     }
     
-    constructor (r, g, b, a)
+    constructor (r = 0, g = 0, b = 0, a)
     {
         this.Set(r, g, b, a ?? 1);
     }
