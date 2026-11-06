@@ -3,7 +3,7 @@
     "resources": [
         "sprites/pixel",
         "sprites/cursor",
-        "sprites/bg/house0",
+        "sprites/bg/house0/a",
         "sprites/avatars/char0",
         [
             "anims/avatar/idle",
@@ -86,15 +86,9 @@
                     "type": "SpriteRenderer",
                     "args": {
                         "sprite": {
-                            "texture": "sprites/bg/house0"
+                            "texture": "sprites/bg/house0/a"
                         },
-                        "sortingLayer": 2,
-                        "color": {
-                            "r": 255,
-                            "g": 255,
-                            "b": 255,
-                            "a": 128
-                        }
+                        "sortingLayer": 2
                     }
                 }
             ]

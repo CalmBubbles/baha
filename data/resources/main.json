@@ -16,10 +16,10 @@
         }
     },
     {
-        "path": "sprites/bg/house0",
+        "path": "sprites/bg/house0/a",
         "type": "Texture",
         "args": {
-            "src": "bg/house0.png",
+            "src": "bg/house0/a.png",
             "pixelPerUnit": 50
         }
     },
