@@ -88,7 +88,7 @@
                         "sprite": {
                             "texture": "sprites/bg/house0/a"
                         },
-                        "sortingLayer": 2
+                        "sortingLayer": 1
                     }
                 }
             ]
